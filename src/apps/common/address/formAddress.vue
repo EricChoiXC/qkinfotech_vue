@@ -936,10 +936,9 @@ export default defineComponent({
           node.children = res
           resolve()
         })*/
-        console.log("loadGroupMemberNodes")
-        console.log(node)
         node.children = []
         // 四个父节点点击加载
+        node.children.length = 0
         if (node.treeKey === 'global') {
           var query = {
             or : [{
@@ -958,7 +957,18 @@ export default defineComponent({
             query : query
           }
           api.orgGroupList(param).then(function(res) {
-            console.log(res)
+            for (var i=0; i<res.data.length; i++) {
+              var temp = {
+                treeLabel : res.data[i].fName,
+                treeKey : res.data[i].fId,
+                isLeaf : true,
+                members : []
+              }
+              for (var j=0; j<res.data[i].fMembers.length; j++) {
+                temp.members.push(res.data[i].fMembers[j].fElement)
+              }
+              node.children.push(temp)
+            }
           })
         } else if (node.treeKey === 'personal') {
           var query = {
@@ -972,7 +982,18 @@ export default defineComponent({
             query : query
           }
           api.orgGroupListAll(param).then(function(res) {
-            console.log(res)
+            for (var i=0; i<res.data.length; i++) {
+              var temp = {
+                treeLabel : res.data[i].fName,
+                treeKey : res.data[i].fId,
+                isLeaf : true,
+                members : []
+              }
+              for (var j=0; j<res.data[i].fMembers.length; j++) {
+                temp.members.push(res.data[i].fMembers[j].fElement)
+              }
+              node.children.push(temp)
+            }
           })
           query = {
             and : [
@@ -982,17 +1003,50 @@ export default defineComponent({
           }
           param.query = query
           api.orgGroupListAll(param).then(function(res) {
-            console.log(res)
+            for (var i=0; i<res.data.length; i++) {
+              var temp = {
+                treeLabel : res.data[i].fName,
+                treeKey : res.data[i].fId,
+                isLeaf : true,
+                members : []
+              }
+              for (var j=0; j<res.data[i].fMembers.length; j++) {
+                temp.members.push(res.data[i].fMembers[j].fElement)
+              }
+              node.children.push(temp)
+            }
           })
 
 
         } else if (node.treeKey === 'dept') {
           api.orgOrgGroupList({fKey : "dept"}).then(function(res) {
-            console.log(res)
+            for (var i=0; i<res.data.length; i++) {
+              var temp = {
+                treeLabel : res.data[i].fName,
+                treeKey : res.data[i].fId,
+                isLeaf : true,
+                members : []
+              }
+              for (var j=0; j<res.data[i].fMembers.length; j++) {
+                temp.members.push(res.data[i].fMembers[j].fElement)
+              }
+              node.children.push(temp)
+            }
           })
         } else if (node.treeKey === 'company') {
           api.orgOrgGroupList({fKey : "company"}).then(function(res) {
-            console.log(res)
+            for (var i=0; i<res.data.length; i++) {
+              var temp = {
+                treeLabel : res.data[i].fName,
+                treeKey : res.data[i].fId,
+                isLeaf : true,
+                members : []
+              }
+              for (var j=0; j<res.data[i].fMembers.length; j++) {
+                temp.members.push(res.data[i].fMembers[j].fElement)
+              }
+              node.children.push(temp)
+            }
           })
         }
         resolve()
@@ -1031,7 +1085,7 @@ export default defineComponent({
       groupsTree.length = 0
 
       //加载无分类群组
-      api.groupList().then(function (res) {
+      /*api.groupList().then(function (res) {
         if (res.status == 200 && res.data.list.length > 0) {
           for (var i = 0; i < res.data.list.length; i++) {
             var temp = res.data.list[i]
@@ -1043,7 +1097,7 @@ export default defineComponent({
             })
           }
         }
-      })
+      })*/
 
       //加载四大群组类型
       groupsTree.push({
