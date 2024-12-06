@@ -1,0 +1,100 @@
+由于后台无法传输类,只能传输 布尔,梳子,文字行,所以需要两个 map
+iconMap = {
+  "home": Home,
+  "admin": Admin,
+  "config": Config
+}
+
+vueMap = {
+  "/apps/opdesk.vue": () => import("./apps/opdesk.vue"),
+  "/apps/news/add.vue": () => import("./apps/opdesk.vue"),
+  "/apps/new/del/opdesk.vue": () => import("./apps/opdesk.vue")
+}
+
+从后台返回的json
+
+[{
+  key: "home",
+  label: "首页",
+  icon: "home",
+  display: "tab",
+  component: "/apps/opdesk.vue"
+},{
+  key: "adm",
+  label: "行政",
+  icon: "XXXX",
+  children: [{
+    key: "carm",
+    label: "车辆管理",
+    icon: "XXXX",
+    menu: [{
+      label: "且听风吟",
+      key: "hear-the-wind-sing",
+      icon: "BookIcon",
+      component: "/apps/grpop2/app1/fnc1.vue"
+    },
+    {
+      label: "1973年的弹珠玩具",
+      key: "pinball-1973",
+      icon: "BookIcon",
+      disabled: true,
+      children: [
+        {
+          label: "鼠",
+          key: "rat",
+          display: "tab",
+          component: "/apps/grpop2/app2/fnc1.vue"
+        },{
+          label: "猫",
+          key: "cat",
+          display: "tab",
+          url: "www.baidu.com"
+        },{
+          label: "狗",
+          key: "dog",
+          display: "dialog",
+          component: "/apps/grpop2/app2/fnc1.vue"
+        },{
+          label: "牛",
+          key: "bull",
+          display: "dialog",
+          url: "www.baidu.com"
+        },{
+          label: "猪",
+          key: "pig",
+          display: "window",
+          component: "/apps/grpop2/app2/fnc1.vue"
+        },{
+          label: "虎",
+          key: "tiger",
+          display: "window",
+          url: "www.baidu.com"
+        }
+    }]
+  },{
+    key: "metting",
+    label: "会议管理",
+    icon: "XXXX",
+    children: [{
+      key: "meeting-card",
+      label: "会议卡片",
+      icon: "XXXX",
+      menu: []
+    },{
+      key: "meeting-room",
+      label: "会议室",
+      icon: "XXXX",
+      menu: []
+    },{
+      key: "meeting-main",
+      label: "会议管理",
+      icon: "XXXX",
+      menu: []
+    }]
+  }
+},{
+  key: "project",
+  label: "项目管理",
+  icon: "XXXX",
+  children: []
+}]

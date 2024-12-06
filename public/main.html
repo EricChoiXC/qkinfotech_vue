@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<button type="button" onclick="preview()">保存</button>
+	</body>
+	<script>
+		let previewWin;
+		function preview(){
+			previewWin = window.open("preview.html", "_blank")
+		}
+
+		window.setPreviewData = function() {
+			let d = previewWin.document.body.querySelector("#preview").innerHTML;
+			d = d.replace("${name}", "张三");
+			d = d.replace("${pic}", "<img src='designer.png'>")
+			return d;
+		}
+
+	</script>
+</html>

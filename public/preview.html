@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+      .page {
+        page-break-after: always;
+        width: 360mm;
+        height: 160mm;
+        box-sizing: border-box;
+        border: 1px solid gray;
+        position: relative;
+      }
+
+      .designer {
+        margin-top: 3mm;
+        width: 99%;
+        height: 85%;
+        display: grid;
+        grid-Template-Columns: 300px auto;
+        grid-Template-Rows: 280px auto;
+        gap: 4mm;
+      }
+
+      .container {
+        margin-top: 3mm;
+        width: 99%;
+        height: 85%;
+        display: inline-grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: auto;
+        grid-gap: 3mm;
+      }
+
+      .item {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border: 2px solid rgb(32, 56, 100);
+        ;
+        padding: 10px;
+        box-sizing: border-box;
+      }
+
+      .item>div {
+        margin-bottom: 6px;
+        /* 调整每行之间的间距 */
+        font-size: 6mm;
+      }
+
+      .blue-square {
+        width: 50px;
+        /* 正方形宽度 */
+        height: 50px;
+        /* 正方形高度 */
+        background-color: rgb(32, 56, 100);
+        /* 背景色为蓝色 */
+        position: absolute;
+        /* 绝对定位 */
+        top: 0;
+        /* 距离其父元素（.page）顶部的距离为0 */
+        left: 0;
+        /* 距离其父元素（.page）左侧的距离为0 */
+        /* z-index: -1; */
+        display: flex;
+        /* 使用 Flexbox 布局 */
+        justify-content: center;
+        /* 水平居中 */
+        align-items: center;
+        /* 垂直居中 */
+      }
+
+      .text-container {
+        color: white;
+        /* 文字颜色为白色 */
+        font-size: 27px;
+        /* 字体大小 */
+        font-weight: bold;
+        /* 字体加粗 */
+        text-align: center;
+        /* 文字居中 */
+      }
+
+      .text-right {
+        font-size: 23px;
+        margin-left: 15mm;
+        color: rgb(47, 85, 151)
+      }
+    </style>
+  </head>
+  <body>
+    <div id="toolbar"><button type="button">保存</button><button type="button" onclick="download()">下载</button></div>
+    <div id="preview">
+      <div class="page" style="display: grid;grid-template-columns: 40mm 140mm auto;gap: 1mm;">
+        <div style="width: 37.6mm;height: 157mm;background-color: rgb(32, 56, 100);">
+        </div>
+        <div>
+          <p
+            style="font-size: 27px;font-weight: bold;display: flex;flex-direction: column;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;">
+            【${projectName}】</p>
+          <p
+            style="font-size: 23px;font-weight: bold;display: flex;flex-direction: column;flex-wrap: nowrap;align-content: center;justify-content: center;align-items: center;">
+            资 格 预 审 申 请 文 件</p>
+        </div>
+        <div
+          style="height: 157mm; background-color: rgb(77, 96, 131); display: flex; flex-direction: column; justify-content: flex-end;">
+          <div style="width: 150mm; height: 15mm; background-color: white; margin-left: 20mm;margin-bottom: 20mm;">
+            <p style="font-size: 22px;font-weight: bold;">申请人：${name}</p>
+          </div>
+        </div>
+      </div>
+      <div class="page">
+        <div style="display: flex;align-items: center;height: 50px;">
+          <div class="blue-square">
+            <div class="text-container">
+              01
+            </div>
+          </div>
+          <div class="text-right">
+            申请人基本情况介绍
+          </div>
+        </div>
+        <div class="container">
+          <div class="item" style="height: 350px;">
+            <div>单位注册名称：</div>
+            <div>国别：</div>
+            <div>法定代表人：</div>
+            <div>公司注册地址：</div>
+            <div>公司成立日期：</div>
+            <div>公司电话：</div>
+            <div>官网地址：</div>
+            <div>设计人员总数：【】 人 ，其中注册建筑/景观设计师【】人</div>
+          </div>
+          <div class="item" style="height: 210px;">
+            <div>本项目联系人：</div>
+            <div>职务：</div>
+            <div>电话：</div>
+            <div>邮箱：</div>
+            <div>通信地址及邮编：</div>
+          </div>
+          <div class="item" style="height: 160px;justify-content: center;">
+            <div>商业登记/营业执照编号：</div>
+            <div>设计资格或资质的种类/级别：</div>
+          </div>
+          <div class="item" style="height: 290px;margin-top: -130px;">
+            <div>公司介绍： </div>
+          </div>
+        </div>
+      </div>
+      <div class="page">
+        <div style="display: flex;align-items: center;height: 50px;">
+          <div class="blue-square">
+            <div class="text-container">
+              02
+            </div>
+          </div>
+          <div class="text-right">
+            【申请人名称+主创设计师姓名】
+          </div>
+        </div>
+        <div class="designer">
+          <div class="item" style="border: 2px dashed rgb(32, 56, 100); ">照片</div>
+          <div class="item">
+            <table border="1"
+              style="height: 100%;border-collapse: collapse;border: 1px solid rgb(32, 56, 100);text-align: center;">
+              <tr>
+                <td style="width: 25%;">职称/执业资格</td>
+                <td style="width: 25%;"></td>
+                <td style="width: 25%;">从业年限</td>
+                <td style="width: 25%;"></td>
+              </tr>
+              <tr>
+                <td style="width: 25%;">
+                  曾获国内或国际设计奖项
+                </td>
+                <td colspan="3"></td>
+              </tr>
+              <tr>
+                <td style="width: 25%;">
+                  主创同类设计业绩
+                </td>
+                <td colspan="3"></td>
+              </tr>
+            </table>
+          </div>
+          <div class="item">
+            <div style="font-size: 4mm;">项目名称：</div>
+            <div style="font-size: 4mm;">项目地点：</div>
+            <div style="font-size: 4mm;">业主名称：</div>
+            <div style="font-size: 4mm;">规模：</div>
+            <div style="font-size: 4mm;">功能：</div>
+            <div style="font-size: 4mm;">服务起止时间：</div>
+            <div style="font-size: 4mm;">项目现状：</div>
+            <div style="font-size: 4mm;">所承担的工作内容：</div>
+          </div>
+          <div class="item">照片</div>
+        </div>
+        <!-- 照片: ${pic} -->
+      </div>
+      <div class="page">
+        <div style="display: flex;align-items: center;height: 50px;">
+          <div class="blue-square">
+            <div class="text-container">
+              03
+            </div>
+          </div>
+          <div class="text-right">
+            主创设计师类似项目业绩
+          </div>
+        </div>
+        <div class="container">
+          <div class="item"  style="grid-row: span 2;">
+            <div>项目名称：</div>
+            <div>项目地点：</div>
+            <div>业主名称：</div>
+            <div>规模：</div>
+            <div>功能：</div>
+            <div>服务起止时间：</div>
+            <div>项目现状：</div>
+            <div>所承担的服务内容：</div>
+          </div>
+          <div class="item">
+
+          </div>
+          <div class="item">
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </body>
+  <script>
+    document.body.querySelector("#preview").innerHTML = window.opener.setPreviewData();
+
+    function download() {
+      const element = document.getElementById("preview");
+      const options = {
+        dpi: 192, //dpi属性的值为192，表示图像的分辨率
+        scale: 1, //scale属性的值为2，表示图像的缩放比例。
+        backgroundColor: "white" //backgroundColor属性的值为"#F1F6FE"，表示图像的背景颜色。
+      };
+      const pages = element.children;
+
+      let count = 0;
+      const pdf = new jsPDF('', 'pt',
+        'a4' /*[contentWidth,	contentHeight]*/
+      ); //创建一个新的PDF对象，参数包括页面格式（'1'表示A4纸张）、单位（'pt'）和页面尺寸（[contentWidth, contentHeight]）
+      // 将元素转换为canvas对象
+      function addPage(page) {
+        return html2canvas(page, options).then((canvas) => {
+          var contentWidth = canvas.width; //获取Canvas(上面元素id 'layout-wrapper')对象的宽度
+          var contentHeight = canvas.height; //获取Canvas(上面元素id 'layout-wrapper')对象的高度
+          // 创建jsPDF对象
+          //jsPDF = jspdf.jsPDF; //导入jsPDF库，用于创建PDF文件
+          //将Canvas对象转换为JPEG格式的数据，并将其存储在pageData变量中。1.0表示图片质量
+          var pageData = canvas.toDataURL('image/jpeg', 1.0);
+          //将JPEG格式的图片添加到PDF文件中，图片的左上角坐标为(0, 0)，宽度为contentWidth，高度为contentHeight
+          pdf.addImage(pageData, 'JPEG', 0, 0, contentWidth, contentHeight);
+          ++count;
+          if (count < pages.length) {
+            pdf.addPage();
+            addPage(pages[count])
+          } else {
+            pdf.save("test.pdf");
+          }
+        });
+      }
+      addPage(pages[0]);
+    }
+  </script>
+</html>
