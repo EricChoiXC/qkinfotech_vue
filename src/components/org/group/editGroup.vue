@@ -14,9 +14,9 @@
                 :disabled="$props.status == 'view'"
               ></n-input>
             </n-form-item>
-            <!-- <n-form-item label="所属" path="fOwner">
+             <n-form-item label="所属" path="fOwner">
               <formAddress :fElement="orgInfo.fOwner" orgType="ORG_TYPE_ALL" status="edit"></formAddress>
-            </n-form-item> -->
+            </n-form-item>
             <n-form-item label="范围" path="fMembers">
               <formAddress
                 :fElements="orgInfo.fMembers"
@@ -24,6 +24,14 @@
                 multi
                 :status="$props.status"
               ></formAddress>
+            </n-form-item>
+            <n-form-item label="群组分类" path="fGroupCate">
+              <singleCateDialog :multi="false" :fElement="orgInfo.fGroupCate" status="edit" categoryName="org/group/cate">
+
+              </singleCateDialog>
+              <singleCateDialog :multi="true" :fElements="orgInfo.fGroupCates" status="edit" categoryName="org/group/cate">
+
+              </singleCateDialog>
             </n-form-item>
           </n-form>
           <n-button @click="add">提交</n-button>
@@ -36,10 +44,13 @@
 import { ref, defineComponent, h } from 'vue'
 import { useMessage } from 'naive-ui'
 import formAddress from '@/apps/common/address/formAddress.vue'
+import singleCateDialog from '@/sys/common/dialog/SingleCateDialog.vue'
 import createApi from './api'
+import SingleCateDialog from "@/sys/common/dialog/SingleCateDialog.vue";
 
 export default defineComponent({
   components: {
+    SingleCateDialog,
     formAddress: formAddress,
   },
   props: {
@@ -54,6 +65,15 @@ export default defineComponent({
       fName: '',
       fType: 5,
       fMembers: [],
+      fOwner : {
+        fId : '',
+        fName : ''
+      },
+      fGroupCate: {
+        fId : '',
+        fName : ''
+      },
+      fGroupCates : []
     })
     console.log(props.status)
 
